@@ -1,0 +1,11 @@
+template {
+	name=TriggerBasicShipSpawn
+	components {
+		component {
+			class=com.forgottenspace.es.components.AiComponent
+			properties {
+				script=/Scripts/AI/BasicSpawnScript.ais
+			}
+		}
+	}
+}

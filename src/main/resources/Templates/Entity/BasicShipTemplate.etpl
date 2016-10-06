@@ -1,0 +1,27 @@
+template {
+	name=Basic Ship Template
+	components {
+		component {
+			class=com.forgottenspace.es.components.RenderComponent
+			properties {
+				j3o=/Models/Plane1.j3o
+			}
+		}
+		component {
+			class=com.forgottenspace.es.components.CanMoveComponent
+			properties {
+				maxSpeed=15.0
+				acceleration=5.0
+				deceleration=0.25
+				brake=5.0
+				turnSpeed=2.5
+			}
+		}
+		component {
+			class=com.forgottenspace.es.components.StructureComponent
+			properties {
+				hitpoints=1000
+			}
+		}
+	}
+}

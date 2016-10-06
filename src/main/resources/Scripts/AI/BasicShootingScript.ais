@@ -1,0 +1,15 @@
+script {
+    name=Basic Shooting Script
+    entry=shoot
+    components {
+        component {
+            class=com.ractoc.fs.components.ai.ShootComponent
+            id=shoot
+            properties {
+            }
+            exits {
+                boom=exit
+            }
+        }
+    }
+}

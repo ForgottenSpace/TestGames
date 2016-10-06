@@ -1,0 +1,16 @@
+script {
+    name=Basic Movement Script
+    entry=approach
+    components {
+        component {
+            class=com.ractoc.fs.components.ai.ApproachComponent
+            id=approach
+            properties {
+                range=5
+            }
+            exits {
+                destroyed=exit
+            }
+        }
+    }
+}
