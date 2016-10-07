@@ -62,6 +62,7 @@ public class Main extends SimpleApplication {
         spawnPlayer();
     }
 
+    // disabled for now since there is a bug in the starfield software somewhere
     private void setupStarField() {
         StarFieldAppState sfas = new StarFieldAppState(entities);
         sfas.setWidth(settings.getWidth());
