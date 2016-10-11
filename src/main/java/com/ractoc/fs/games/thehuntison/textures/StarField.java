@@ -7,6 +7,7 @@ package com.ractoc.fs.games.thehuntison.textures;
 import com.jme3.texture.Image;
 import com.jme3.texture.Texture;
 import com.jme3.texture.Texture2D;
+import com.jme3.texture.image.ColorSpace;
 import com.jme3.util.BufferUtils;
 import java.awt.Color;
 import java.nio.ByteBuffer;
@@ -21,10 +22,17 @@ import java.util.Random;
  */
 public final class StarField {
 
-    private int width, height, density, size = 1, randomStarColorInterval,
-            previousRandomStarColor, nextRandomStarColor,
-            randomStarSizeInterval, previousRandomStarSize, nextRandomStarSize,
-            randomStarSizeShift;
+    private int width;
+    private int height;
+    private int density;
+    private int size = 1;
+    private int randomStarColorInterval;
+    private int previousRandomStarColor;
+    private int nextRandomStarColor;
+    private int randomStarSizeInterval;
+    private int previousRandomStarSize;
+    private int nextRandomStarSize;
+    private int randomStarSizeShift;
     private Color starColor;
     private Color[][] stars;
     private static Random rand = new Random(System.currentTimeMillis());
@@ -207,7 +215,7 @@ public final class StarField {
      */
     public Texture generate() {
         Texture2D t = new Texture2D();
-        Image i = new Image(Image.Format.RGBA8, width, height, addStars());
+        Image i = new Image(Image.Format.RGBA8, width, height, addStars(), ColorSpace.sRGB);
         t.setImage(i);
         return t;
     }
@@ -228,7 +236,7 @@ public final class StarField {
                     byte a = (byte) ((rgb & 0xFF000000) >> 24);
                     byte r = (byte) ((rgb & 0x00FF0000) >> 16);
                     byte g = (byte) ((rgb & 0x0000FF00) >> 8);
-                    byte b = (byte) ((rgb & 0x000000FF));
+                    byte b = (byte) (rgb & 0x000000FF);
                     data.put(r).put(g).put(b).put(a);
                 } else {
                     byte a = (byte) 0x00;
@@ -275,9 +283,6 @@ public final class StarField {
         }
 
         while (x < y) {
-            // ddF_x == 2 * x + 1;
-            // ddF_y == -2 * y;
-            // f == x*x + y*y - radius*radius + 2*x - y + 1;
             if (f >= 0) {
                 y--;
                 ddFy += 2;

@@ -58,7 +58,7 @@ public class Main extends SimpleApplication {
         setupEntitySystem();
         setupAppStates();
         setupCamera();
-        //setupStarField();
+        setupStarField();
         spawnPlayer();
     }
 
@@ -96,36 +96,37 @@ public class Main extends SimpleApplication {
         }
     }
 
-    private void setupEntitySystem() {
+    @SuppressWarnings("unchecked")
+	private void setupEntitySystem() {
         TemplateLoader.setClassLoader(this.getClass().getClassLoader());
         assetManager.registerLoader(TemplateLoader.class, "etpl", "ETPL");
         assetManager.registerLoader(AiScriptLoader.class, "ais", "AIS");
 
-        Entities.getInstance().registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
+        entities.registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
                                                                           AiComponent.class);
-        Entities.getInstance().registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
+        entities.registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
                                                                           BoundedEntityComponent.class);
-        Entities.getInstance().registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
+        entities.registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
                                                                           CanMoveComponent.class);
-        Entities.getInstance().registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
+        entities.registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
                                                                           ControlledComponent.class);
-        Entities.getInstance().registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
+        entities.registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
                                                                           DamageComponent.class);
-        Entities.getInstance().registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
+        entities.registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
                                                                           HasFocusComponent.class);
-        Entities.getInstance().registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
+        entities.registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
                                                                           LocationComponent.class);
-        Entities.getInstance().registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
+        entities.registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
                                                                           MovementComponent.class);
-        Entities.getInstance().registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
+        entities.registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
                                                                           RenderComponent.class);
-        Entities.getInstance().registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
+        entities.registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
                                                                           ShootMainComponent.class);
-        Entities.getInstance().registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
+        entities.registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
                                                                           SpeedComponent.class);
-        Entities.getInstance().registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
+        entities.registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
                                                                           StructureComponent.class);
-        Entities.getInstance().registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
+        entities.registerComponentTypesWithComponentStorage(new InMemoryComponentStorage(),
                                                                           OriginComponent.class);
     }
 

@@ -51,9 +51,15 @@ import com.ractoc.fs.games.thehuntison.textures.StarField;
  */
 public final class StarFieldAppState extends AbstractAppState {
 
-    private int width, height, density, nrLayers, layerBaseSize,
-            starFieldDistance, randomStarColorInterval, randomStarSizeInterval,
-            randomStarSizeShift;
+    private int width;
+    private int height;
+    private int density;
+    private int nrLayers;
+    private int layerBaseSize;
+    private int starFieldDistance;
+    private int randomStarColorInterval;
+    private int randomStarSizeInterval;
+    private int randomStarSizeShift;
     private SimpleApplication sApp;
     private List<Material> layers = new ArrayList<>();
     private Node starfield = new Node("starfield");
@@ -109,7 +115,7 @@ public final class StarFieldAppState extends AbstractAppState {
 
     private void createLayer(final int layerIndex) {
         double divider =
-               (1 + starFieldDistance / sApp.getCamera().getLocation().y);
+               1 + starFieldDistance / sApp.getCamera().getLocation().y;
 
         double dScreenHeight = 2 * (height / divider) + height;
         int screenHeight = (int) dScreenHeight;
@@ -143,7 +149,12 @@ public final class StarFieldAppState extends AbstractAppState {
         Material mat1 = new Material(sApp.getAssetManager(),
                                      "MatDefs/MovingTexture.j3md");
         mat1.setTexture("ColorMap", stars);
-        mat1.setFloat("visibility", visibility / layerIndex);
+        float matVisibility = visibility;
+        if (layerIndex > 0) {
+        	matVisibility = visibility / layerIndex;
+        }
+        
+        mat1.setFloat("visibility", matVisibility);
         mat1.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
         mat1.getAdditionalRenderState().setFaceCullMode(FaceCullMode.Off);
         layers.add(layerIndex, mat1);
@@ -161,7 +172,7 @@ public final class StarFieldAppState extends AbstractAppState {
         EntityResultSet.UpdateProcessor processor = entSet.getUpdateProcessor();
         List<Entity> removeEntities = processor.getRemovedEntities();
         List<Entity> addEntities = processor.getAddedEntities();
-        if (removeEntities.size() > 0) {
+        if (!removeEntities.isEmpty()) {
             if (!entity.getId().equals(removeEntities.get(0).getId())) {
                 throw new EntityException("Unknown entity. Expected "
                         + entity.getId() + " found "
@@ -170,7 +181,7 @@ public final class StarFieldAppState extends AbstractAppState {
                 entity = null;
             }
         }
-        if (addEntities.size() > 0) {
+        if (!addEntities.isEmpty()) {
             if (entity != null) {
                 throw new EntityException("Already have entity " + entity.getId()
                         + " with focus.");
@@ -180,15 +191,14 @@ public final class StarFieldAppState extends AbstractAppState {
         }
         processor.finalizeUpdates();
         if (entity != null) {
-            LocationComponent locComp = (LocationComponent) entities.loadComponentForEntity(entity, LocationComponent.class);
+            LocationComponent locComp = entities.loadComponentForEntity(entity, LocationComponent.class);
             for (int i = 0; i < layers.size(); i++) {
-                moveLayer(tpf, i, locComp);
+                moveLayer(i, locComp);
             }
         }
     }
 
-    private void moveLayer(final float tpf,
-                           final int layerIndex,
+    private void moveLayer(final int layerIndex,
                            final LocationComponent locComp) {
         layers.get(layerIndex).setVector2("posDelta",
                                           new Vector2f(locComp.getTranslation().x,
